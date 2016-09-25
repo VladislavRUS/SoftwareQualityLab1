@@ -298,16 +298,6 @@ function start() {
             document.getElementById('histogram').innerHTML += ' <br> Количество ребер: ' + ind + ', значение: ' + val;
         });
 
-/*
-        var edges = trees[randomTree].getVertexes() - 1;
-
-        histogram = histogram.map(function(val, ind) {
-            var possibility = (val / edges).toFixed(2);
-            console.log(possibility);
-            return (ind * possibility);
-        });
-*/
-
         document.getElementById('histogram').innerHTML += '<br> Среднее количество исходящих ребер: ' + (trees[randomTree].getAverageEdgeAmount()).toFixed(2);
 
         trees.forEach(function(tree, ind) {
