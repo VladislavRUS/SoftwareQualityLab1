@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Качество ПО, Лабораторная #1</title>
+
+    <script src="vis.min.js"></script>
+    <link href="vis.min.css" rel="stylesheet">
+
+    <style type="text/css">
+        #mynetwork {
+            height: 800px;
+        }
+    </style>
+</head>
+<body>
+    <button id="btn" onclick="start()">Start</button>
+    <input type="number" placeholder="N" id="N">
+    <input type="number" placeholder="R" id="R">
+    <input type="number" placeholder="m" id="m"> <br> <br>
+    <input type="checkbox"id="random"> Генерация с постоянным количеством
+
+    <br><br>
+
+    <div id="info"></div>
+
+    <div id="tree"></div>
+
+    <div id="mynetwork" style="border: 1px solid black"></div>
+
+    <div id="vertices"></div>
+
+    <div id="leaves"></div>
+
+    <div id="histogram"></div>
+
+    <div id="all"></div>
+
+    <div id="total"></div>
+</body>
+<script src="script.js"></script>
+</html>
