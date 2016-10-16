@@ -268,8 +268,6 @@ function createTree(treeNumber, randomTreeIndex) {
         var nextLayer = new Layer();
         layers.push(nextLayer);
 
-        //console.log('Took layer: ' + (layerCnt - 1));
-
         if (prevLayer.vertices.length == 0) {
             console.log('No vertices in last layer');
 
@@ -279,13 +277,11 @@ function createTree(treeNumber, randomTreeIndex) {
 
             } else {
                 layers.splice(layers.length - 1, 1);
-                //tree.layers = layers;
                 trees.push(tree);
                 interrupted = true;
             }
 
         } else {
-            //console.log('It contains : ' + prevLayer.vertices.length + ' vertices');
 
             for (var i = 0; i < prevLayer.vertices.length; i++) {
                 if (!numberExceed) {
@@ -294,7 +290,6 @@ function createTree(treeNumber, randomTreeIndex) {
                     vertex.processed = true;
 
                     var childrenAmount = constantAmount ? maxChildren - 1 : Math.floor(Math.random() * maxChildren);
-                    //var children = [];
 
                     for (var j = 0; j < childrenAmount; j++) {
                         if (aVariant) {
@@ -331,7 +326,6 @@ function createTree(treeNumber, randomTreeIndex) {
 
     if (!interrupted) {
         console.log('Finished tree with index: ' + treeNumber);
-        //tree.layers = layers;
         trees.push(tree);
 
     } else {
