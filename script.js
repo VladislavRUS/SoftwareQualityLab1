@@ -2,7 +2,8 @@ var maxChildren = 6,
     N = 200,
     R = 100,
     constantAmount = false,
-    aVariant = false;
+    aVariant = false,
+    items = [];
 
 var trees = [];
 var network;
@@ -36,7 +37,6 @@ Tree.prototype.getLeavesArray = function () {
     });
     return leaves;
 };
-
 
 Tree.prototype.getVertexes = function () {
     var vertexes = 0;
@@ -141,7 +141,8 @@ Tree.prototype.fillTableWithAllVertices = function () {
     while (vertices.length > 0) {
         var tr = document.createElement('tr');
         var isLonger = vertices.length > 10;
-        for (var i = 0; i < (isLonger ? 10 : vertices.length); i++) {
+        var len = isLonger ? 10 : vertices.length;
+        for (var i = 0; i < len; i++) {
             var td = document.createElement('td');
             var v = vertices.shift();
             td.innerHTML = v.name;
@@ -163,9 +164,11 @@ Tree.prototype.fillTableWithAllLeaves = function () {
     leavesDiv.appendChild(div);
 
     while (leaves.length > 0) {
-        var tr = document.createElement('tr');
         var isLonger = leaves.length > 10;
-        for (var i = 0; i < (isLonger ? 10 : leaves.length); i++) {
+        var len = isLonger ? 10 : leaves.length;
+
+        var tr = document.createElement('tr');
+        for (var i = 0; i < len; i++) {
             var td = document.createElement('td');
             var v = leaves.shift();
             td.innerHTML = v.name;
@@ -311,7 +314,10 @@ function createTree(treeNumber, randomTreeIndex) {
                             console.log(tree.getLeaves());
                             console.log(tree.countAlpha());
                             var alpha = tree.countAlpha();
-                            document.getElementById('lim').innerHTML += (globalCnt + ';' + alpha) + '<br>';
+                            items.push({
+                                x: globalCnt,
+                                y: alpha
+                            });
                         }
                     }
                 }
@@ -492,6 +498,7 @@ function start() {
     document.getElementById('info').innerHTML = 'Параметры генерации: N = ' + N + ', R = ' + R + ', m = ' + maxChildren;
 
     trees = [];
+    items = [];
 
     var randomTreeIndex = Math.floor(Math.random() * R);
     while (trees.length < R) {
@@ -524,15 +531,15 @@ function start() {
         console.log('Exp: ' + mathExp);
         console.log('Theor: ' + theoreticalAlpha);
 
-        /* if (constantAmount) {
-         if (Math.abs(theoreticalAlpha - mathExp) > 0.1) {
-         throw new Error('Практичесое не равно теоретическому!');
-         }
-         } else {
-         if (mathExp < theoreticalAlpha) {
-         throw new Error('Практическое значение меньше теоретического!');
-         }
-         }*/
+        if (constantAmount) {
+            if (Math.abs(theoreticalAlpha - mathExp) > 0.1) {
+                throw new Error('Практичесое не равно теоретическому!');
+            }
+        } else {
+            if (mathExp < theoreticalAlpha) {
+                throw new Error('Практическое значение меньше теоретического!');
+            }
+        }
 
         console.log('Average alpha: ' + mathExp);
         console.log('Average leaves: ' + averageLeaves);
@@ -573,9 +580,18 @@ function start() {
         document.getElementById('total').innerHTML += '<h2> СКО альфы: ' + Math.sqrt(getDispersion(trees, 'alpha')).toFixed(2) + '</h2> <br>';
 
         document.getElementById('total').innerHTML += '<h2> Альфа по формуле (m - 1) / (m - 2): ' + ((maxChildren - 1) / (maxChildren - 2)).toFixed(2) + '</h2>';
-        /*
-         var randomTree = JSON.parse(JSON.stringify(trees[randomTreeIndex]));
-         makeAlphaDiagram(randomTree);*/
+
+        var container = document.getElementById('lim');
+        var dataset = new vis.DataSet(items);
+        var options = {
+            start: 0,
+            end: trees[randomTreeIndex].getVertexes(),
+            drawPoints: {
+                size: 2,
+                style: 'circle'
+            }
+        };
+        new vis.Graph2d(container, dataset, options);
 
         if (averageEdges < ((maxChildren - 1) / 2 - 1) || averageEdges > (maxChildren - 1) / 2 + 1) {
             if (!constantAmount) {
