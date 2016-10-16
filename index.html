@@ -11,6 +11,12 @@
         #mynetwork {
             height: 800px;
         }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -19,14 +25,13 @@
     <input type="number" placeholder="R" id="R">
     <input type="number" placeholder="m" id="m"> <br> <br>
     <input type="checkbox"id="random"> Генерация с постоянным количеством
+    <input type="checkbox"id="v"> Вариант А
 
     <br><br>
 
     <div id="info"></div>
 
     <div id="tree"></div>
-
-    <div id="mynetwork" style="border: 1px solid black"></div>
 
     <div id="vertices"></div>
 
@@ -37,6 +42,10 @@
     <div id="all"></div>
 
     <div id="total"></div>
+
+    <div id="mynetwork" style="border: 1px solid black"></div>
+
+    <div id="lim"></div>
 </body>
 <script src="script.js"></script>
 </html>
